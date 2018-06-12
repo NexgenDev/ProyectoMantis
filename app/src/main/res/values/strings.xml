@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Proyecto Mantis</string>
+    <string name="app_name">Mantis</string>
     <string name="titulo_principal">mantis</string>
     <string name="texto_usuario">Usuario</string>
     <string name="hint_usuario">Ingrese su usuario</string>
@@ -14,6 +14,8 @@
     <string name="hint_apellidos">Ingrese sus Apellidos</string>
     <string name="texto_correo">Correo</string>
     <string name="hint_correo">Ingrese su correo electronico</string>
+    <string name="texto_btnCrearUsuario">Crear Usuario</string>
+    <string name="texto_repetirContrasena">Repita la contraseña</string>
 
 
 </resources>

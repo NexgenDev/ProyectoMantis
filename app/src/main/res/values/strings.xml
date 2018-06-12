@@ -7,4 +7,13 @@
     <string name="hint_contrasena">Ingrese su contraseña</string>
     <string name="texto_btnIngtresar">Ingresar</string>
     <string name="texto_crear_cuenta">Crear Cuenta</string>
+    <string name="titulo_crearusaurio">Creación de Usuario</string>
+    <string name="texto_nombre">Nombre</string>
+    <string name="hint_nombre">Ingrese su nombre</string>
+    <string name="texto_apellidos">Apellidos</string>
+    <string name="hint_apellidos">Ingrese sus Apellidos</string>
+    <string name="texto_correo">Correo</string>
+    <string name="hint_correo">Ingrese su correo electronico</string>
+
+
 </resources>

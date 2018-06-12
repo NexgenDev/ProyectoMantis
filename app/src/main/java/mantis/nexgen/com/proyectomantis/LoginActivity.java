@@ -1,5 +1,6 @@
 package mantis.nexgen.com.proyectomantis;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnIngresar:
                 break;
             case R.id.txtCrearUsuario:
+                Intent CrearUsuario = new Intent(getApplicationContext(),CrearUsuarioActivity.class);
+                startActivity(CrearUsuario);
                 break;
         }
     }

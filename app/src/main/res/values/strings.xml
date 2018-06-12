@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Proyecto Mantis</string>
+    <string name="titulo_principal">mantis</string>
+    <string name="texto_usuario">Usuario</string>
+    <string name="hint_usuario">Ingrese su usuario</string>
+    <string name="texto_contrasena">Contraseña</string>
+    <string name="hint_contrasena">Ingrese su contraseña</string>
+</resources>

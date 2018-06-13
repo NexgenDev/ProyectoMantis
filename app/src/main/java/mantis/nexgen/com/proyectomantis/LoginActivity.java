@@ -22,6 +22,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edt_contrasena = findViewById(R.id.edtContrasena);
         btn_ingresar = findViewById(R.id.btnIngresar);
         txt_crearCuenta = findViewById(R.id.txtCrearUsuario);
+
+        txt_crearCuenta.setOnClickListener(this);
     }
 
     @Override

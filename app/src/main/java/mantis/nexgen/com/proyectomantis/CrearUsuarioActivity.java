@@ -1,6 +1,8 @@
 package mantis.nexgen.com.proyectomantis;
 
 import android.content.Intent;
+import android.net.LocalSocketAddress;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,12 +12,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class CrearUsuarioActivity extends AppCompatActivity {
 
     EditText edt_nombre,edt_apellidos,edt_correo,edt_contrasena,edt_repiteContrasena,edt_telefono;
     Button btn_crearUsuario;
-    int id;
+    private String Nombre,Apellidos,Correo,Contrasena,Telefono,FechaCreacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,28 +34,16 @@ public class CrearUsuarioActivity extends AppCompatActivity {
         edt_contrasena = findViewById(R.id.edtContrasena);
         edt_repiteContrasena = findViewById(R.id.edtcheckContrasena);
 
+        btn_crearUsuario = findViewById(R.id.btnCrearusuario);
+
+        Nombre = edt_nombre.getText().toString();
+        Apellidos = edt_apellidos.getText().toString();
+        Correo = edt_correo.getText().toString();
+        Telefono = edt_telefono.getText().toString();
+        Contrasena = edt_contrasena.getText().toString();
+
         btn_crearUsuario.setEnabled(false);
 
-        edt_repiteContrasena.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(s==edt_contrasena.getText()){
-                        btn_crearUsuario.setEnabled(true);
-                    }else{
-                        btn_crearUsuario.setEnabled(false);
-                    }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         edt_telefono.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -59,9 +52,10 @@ public class CrearUsuarioActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.toString().equals("")){
+                if(s.toString()==""){
                     btn_crearUsuario.setEnabled(false);
-                }else{
+                }else
+                {
                     btn_crearUsuario.setEnabled(true);
                 }
             }
@@ -75,23 +69,22 @@ public class CrearUsuarioActivity extends AppCompatActivity {
         btn_crearUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String Nombre = edt_nombre.getText().toString();
-                String Apellidos = edt_apellidos.getText().toString();
-                String Correo = edt_correo.getText().toString();
-                String Contrasena = edt_contrasena.getText().toString();
-                String Telefono = edt_telefono.getText().toString();
-                android.text.format.DateFormat df = new android.text.format.DateFormat();
-                String FechaCreacion = df.format("yyyy-MM-dd hh:mm:ss a", new java.util.Date()).toString();
-                Base_Datos_Interna crearusuario = new Base_Datos_Interna(getApplicationContext());
-                boolean creado = crearusuario.CrearUsuario(Nombre,Apellidos,Contrasena,Telefono,Correo,FechaCreacion);
-                if(creado){
-                    Toast.makeText(getApplicationContext(),"Usuario creado - "+FechaCreacion,Toast.LENGTH_LONG).show();
-                    Intent volverMain = new Intent(getApplicationContext(),LoginActivity.class);
-                    startActivity(volverMain);
-                }else
-                {
-                    Toast.makeText(getApplicationContext(),"Usuario no pudo ser creado",Toast.LENGTH_SHORT).show();
+                if (edt_contrasena.getText().toString().equals(edt_repiteContrasena.getText().toString()) ) {
+                    boolean exito;
+                    Date fecha_actual = new Date();
+                    SimpleDateFormat formato_fecha = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                    FechaCreacion = formato_fecha.format(fecha_actual);
+                    Base_Datos_Interna crearusuario = new Base_Datos_Interna(getApplicationContext());
+                    exito = crearusuario.CrearUsuario(Nombre, Apellidos, Contrasena, Telefono, Correo, FechaCreacion);
+                    if (exito) {
+                        Toast.makeText(getApplicationContext(), "Usuario Creado Existosamente", Toast.LENGTH_SHORT).show();
+                        Intent volver = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(volver);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Se presento un error al crear el usuario", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(),"Las contraseñas no coinciden",Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -24,6 +24,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         txt_crearCuenta = findViewById(R.id.txtCrearUsuario);
 
         txt_crearCuenta.setOnClickListener(this);
+        btn_ingresar.setOnClickListener(this);
     }
 
     @Override

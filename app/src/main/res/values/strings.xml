@@ -16,6 +16,8 @@
     <string name="hint_correo">Ingrese su correo electronico</string>
     <string name="texto_btnCrearUsuario">Crear Usuario</string>
     <string name="texto_repetirContrasena">Repita la contraseña</string>
+    <string name="texto_telefono">Teléfono</string>
+    <string name="hint_telefono">Ingrese su número de teléfono</string>
 
 
 </resources>

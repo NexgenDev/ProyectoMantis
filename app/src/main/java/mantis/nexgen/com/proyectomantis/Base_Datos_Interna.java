@@ -15,13 +15,11 @@ public class Base_Datos_Interna extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        if(db !=null) {
             db.execSQL(TABLA_USUARIO);
-        }
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE USUARIOS");
         db.execSQL(TABLA_USUARIO);
     }
@@ -30,7 +28,7 @@ public class Base_Datos_Interna extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         if (db!=null){
             try{
-                db.execSQL("INSERT INTO USUARIOS VALUES ("+Nombre+","+Apellidos+","+Correo+","+Telefono+","+FechaCreacion+");");
+                db.execSQL("INSERT INTO USUARIOS VALUES ('"+Nombre+"','"+Apellidos+"','"+Correo+"','"+Telefono+"','"+Contrasena+"','"+FechaCreacion+"');");
                 usuario_creado=true;
             }catch(SQLException ex){
                 usuario_creado=false;

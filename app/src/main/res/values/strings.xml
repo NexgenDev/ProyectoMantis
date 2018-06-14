@@ -2,7 +2,7 @@
     <string name="app_name">Mantis</string>
     <string name="titulo_principal">mantis</string>
     <string name="texto_usuario">Usuario</string>
-    <string name="hint_usuario">Ingrese su usuario</string>
+    <string name="hint_usuario">Ingrese su número de teléfono</string>
     <string name="texto_contrasena">Contraseña</string>
     <string name="hint_contrasena">Ingrese su contraseña</string>
     <string name="texto_btnIngtresar">Ingresar</string>
@@ -18,6 +18,4 @@
     <string name="texto_repetirContrasena">Repita la contraseña</string>
     <string name="texto_telefono">Teléfono</string>
     <string name="hint_telefono">Ingrese su número de teléfono</string>
-
-
 </resources>

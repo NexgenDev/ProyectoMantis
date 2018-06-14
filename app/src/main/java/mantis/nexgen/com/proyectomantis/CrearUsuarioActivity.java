@@ -20,7 +20,7 @@ public class CrearUsuarioActivity extends AppCompatActivity {
 
     EditText edt_nombre,edt_apellidos,edt_correo,edt_contrasena,edt_repiteContrasena,edt_telefono;
     Button btn_crearUsuario;
-    private String Nombre,Apellidos,Correo,Contrasena,Telefono,FechaCreacion;
+    String FechaCreacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +36,6 @@ public class CrearUsuarioActivity extends AppCompatActivity {
 
         btn_crearUsuario = findViewById(R.id.btnCrearusuario);
 
-        Nombre = edt_nombre.getText().toString();
-        Apellidos = edt_apellidos.getText().toString();
-        Correo = edt_correo.getText().toString();
-        Telefono = edt_telefono.getText().toString();
-        Contrasena = edt_contrasena.getText().toString();
 
         btn_crearUsuario.setEnabled(false);
 
@@ -75,7 +70,7 @@ public class CrearUsuarioActivity extends AppCompatActivity {
                     SimpleDateFormat formato_fecha = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
                     FechaCreacion = formato_fecha.format(fecha_actual);
                     Base_Datos_Interna crearusuario = new Base_Datos_Interna(getApplicationContext());
-                    exito = crearusuario.CrearUsuario(Nombre, Apellidos, Contrasena, Telefono, Correo, FechaCreacion);
+                    exito = crearusuario.CrearUsuario(edt_nombre.getText().toString(),edt_apellidos.getText().toString(),edt_contrasena.getText().toString(),edt_telefono.getText().toString(),edt_correo.getText().toString(), FechaCreacion);
                     if (exito) {
                         Toast.makeText(getApplicationContext(), "Usuario Creado Existosamente", Toast.LENGTH_SHORT).show();
                         Intent volver = new Intent(getApplicationContext(), LoginActivity.class);

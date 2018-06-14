@@ -1,11 +1,12 @@
 package mantis.nexgen.com.proyectomantis;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class Base_Datos_Interna extends SQLiteOpenHelper {
+public class  Base_Datos_Interna extends SQLiteOpenHelper {
     static final String DB_NOMBRE = "dbinterna";
     static final int DB_VERSION = 1;
     static final String TABLA_USUARIO = "CREATE TABLE USUARIOS (NOMBRE TEXT,APELLIDOS TEXT,CORREO TEXT,TELEFONO TEXT UNIQUE,CONTRASENA TEXT,FECHACREACION TEXT)";
@@ -35,5 +36,22 @@ public class Base_Datos_Interna extends SQLiteOpenHelper {
             }
         }
         return usuario_creado;
+    }
+    public boolean Login (String usuario, String contrasena){
+        boolean exito = false;
+        SQLiteDatabase db = getReadableDatabase();
+        if (db != null){
+            try{
+            Cursor registro = db.rawQuery("SELECT 1 FROM USUARIOS WHERE TELEFONO = '"+usuario+"' AND CONTRASENA = '"+contrasena+"'",null);
+            if(registro.moveToFirst()){
+                exito = true;
+            }else{
+                exito = false;
+            }
+            }catch(SQLException ex){
+                exito = false;
+            }
+        }
+        return exito;
     }
 }

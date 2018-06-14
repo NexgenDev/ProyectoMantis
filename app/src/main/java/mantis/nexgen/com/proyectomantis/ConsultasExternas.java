@@ -10,11 +10,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import android.support.v7.app.AppCompatActivity;
 
 import java.util.HashMap;
 
-public class ConsultasExternas extends AppCompatActivity {
+public class ConsultasExternas {
     Context context;
     public ConsultasExternas(Context context) {
         this.context = context;
@@ -25,8 +24,8 @@ public class ConsultasExternas extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 if(response.equals("1")){
-                    Intent ir_menu_principal = new Intent(getApplicationContext(),MenuInicioActivity.class);
-                    startActivity(ir_menu_principal);
+                    Intent ir_menu_principal = new Intent(context,MenuInicioActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(ir_menu_principal);
                 }else
                 {
                     Toast.makeText(context,"Usuario no configurado por Administrador ",Toast.LENGTH_SHORT).show();

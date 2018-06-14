@@ -46,6 +46,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                        Toast.makeText(getApplicationContext(),"Usuario y/o Contraseña erroneos", Toast.LENGTH_SHORT).show();
                    }
                 }else{
+                    Base_Datos_Interna entrar = new Base_Datos_Interna(getApplicationContext());
+                    boolean exito = entrar.Login(edt_usuario.getText().toString(),edt_contrasena.getText().toString());
+                    if(exito){
+                        Intent ir_menuPrincipal = new Intent(getApplicationContext(),MenuInicioActivity.class);
+                        startActivity(ir_menuPrincipal);
+                        Toast.makeText(this, "Conectado offline", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Usuario y/o Contraseña erroneos", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
             case R.id.txtCrearUsuario:

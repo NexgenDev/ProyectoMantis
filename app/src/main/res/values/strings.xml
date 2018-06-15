@@ -18,4 +18,8 @@
     <string name="texto_repetirContrasena">Repita la contraseña</string>
     <string name="texto_telefono">Teléfono</string>
     <string name="hint_telefono">Ingrese su número de teléfono</string>
+    <string name="texto_fitosanitario">Fitosanitario</string>
+    <string name="texto_fumigacion">Fumigación</string>
+    <string name="texto_nutricion">Nutrición</string>
+    <string name="titulo_menu_principal">Menu Principal</string>
 </resources>

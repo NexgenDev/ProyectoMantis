@@ -24,10 +24,14 @@ public class ConsultasExternas {
             @Override
             public void onResponse(String response) {
                 if(response.equals("1")){
+                    Base_Datos_Interna actualizarEstado = new Base_Datos_Interna(context);
+                    actualizarEstado.ActualizarEstadoLocal(usuario,1);
                     Intent ir_menu_principal = new Intent(context,MenuInicioActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(ir_menu_principal);
                 }else
                 {
+                    Base_Datos_Interna actualizarEstado = new Base_Datos_Interna(context);
+                    actualizarEstado.ActualizarEstadoLocal(usuario,0);
                     Toast.makeText(context,"Usuario no configurado por Administrador ",Toast.LENGTH_SHORT).show();
                 }
             }

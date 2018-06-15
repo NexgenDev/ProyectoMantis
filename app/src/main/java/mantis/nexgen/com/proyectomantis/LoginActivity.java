@@ -35,10 +35,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch(v.getId()){
             case R.id.btnIngresar:
                 DetectorConexion dc = new DetectorConexion(getApplicationContext());
-                boolean conectado = dc.Conectado();
+                boolean conectado = dc.Conectado(); //determine si el equipo esta conectado a wifi o datos
                 if(conectado){
+
                     Base_Datos_Interna entrar = new Base_Datos_Interna(getApplicationContext());
-                   boolean exito = entrar.Login(edt_usuario.getText().toString(),edt_contrasena.getText().toString());
+                   boolean exito = entrar.Login(edt_usuario.getText().toString(),edt_contrasena.getText().toString());//determina si el usuario y clave local estan bien
                    if(exito){
                         ConsultasExternas ce = new ConsultasExternas(getApplicationContext());
                          ce.LoginExterno(edt_usuario.getText().toString());
@@ -47,13 +48,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                    }
                 }else{
                     Base_Datos_Interna entrar = new Base_Datos_Interna(getApplicationContext());
-                    boolean exito = entrar.Login(edt_usuario.getText().toString(),edt_contrasena.getText().toString());
+                    boolean exito = entrar.LoginInterno(edt_usuario.getText().toString(),edt_contrasena.getText().toString());
                     if(exito){
                         Intent ir_menuPrincipal = new Intent(getApplicationContext(),MenuInicioActivity.class);
                         startActivity(ir_menuPrincipal);
                         Toast.makeText(this, "Conectado offline", Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(getApplicationContext(),"Usuario y/o Contraseña erroneos", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Usuario y/o Contraseña erroneos - No se ha conectado online previamente", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;

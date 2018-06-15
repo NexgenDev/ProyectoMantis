@@ -3,7 +3,7 @@
     package="mantis.nexgen.com.proyectomantis">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -21,10 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CrearUsuarioActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MenuInicioActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".CrearUsuarioActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuInicioActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".FormFitosanitarioActivity" />
+        <activity android:name=".FormFumigacionActivity" />
+        <activity android:name=".FormNutricionActivity"></activity>
     </application>
 
 </manifest>

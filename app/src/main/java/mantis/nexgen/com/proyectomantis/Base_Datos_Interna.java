@@ -80,4 +80,20 @@ public class  Base_Datos_Interna extends SQLiteOpenHelper {
         }
         return exito;
     }
+    public String ObtenerNombre (String telefono){
+        SQLiteDatabase db = getReadableDatabase();
+        if(db != null){
+            try{
+                Cursor datos_usuario = db.rawQuery("SELECT * FROM USUARIOS WHERE TELEFONO ='"+telefono+"';",null);
+                if(datos_usuario.moveToFirst()){
+
+                    String Nombre_completo = datos_usuario.getString(0)+" "+datos_usuario.getString(1);
+                    return Nombre_completo;
+                }
+
+            }catch(SQLException ex){return "No encontrado";}
+
+        }
+        return "No encontrado";
+    }
 }

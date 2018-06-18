@@ -22,4 +22,8 @@
     <string name="texto_fumigacion">Fumigación</string>
     <string name="texto_nutricion">Nutrición</string>
     <string name="titulo_menu_principal">Menu Principal</string>
+    <string name="text_usuario_form">Usuario:</string>
+    <string name="text_fecha_form">Fecha:</string>
+    <string name="text_producto_form">Producto:</string>
+    <string name="text_variedad_form">Variedad:</string>
 </resources>

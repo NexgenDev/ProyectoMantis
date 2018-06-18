@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     boolean exito = entrar.LoginInterno(edt_usuario.getText().toString(),edt_contrasena.getText().toString());
                     if(exito){
                         Intent ir_menuPrincipal = new Intent(getApplicationContext(),MenuInicioActivity.class);
+                        ir_menuPrincipal.putExtra("com.nexgen.mantis.usuario",edt_usuario.getText().toString());
                         startActivity(ir_menuPrincipal);
                         Toast.makeText(this, "Conectado offline", Toast.LENGTH_SHORT).show();
                     }else{

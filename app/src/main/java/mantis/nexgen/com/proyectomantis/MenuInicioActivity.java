@@ -9,6 +9,7 @@ import android.view.View;
 public class MenuInicioActivity extends AppCompatActivity implements View.OnClickListener{
 
     CardView card_fitosanitario,card_fumigacion,card_nutricion;
+    String usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,10 @@ public class MenuInicioActivity extends AppCompatActivity implements View.OnClic
         card_fumigacion.setOnClickListener(this);
         card_nutricion.setOnClickListener(this);
 
+        Intent getUsuario = getIntent();
+        Bundle getUsuarioBdl = getUsuario.getExtras();
+        usuario = getUsuarioBdl.getString("com.nexgen.mantis.usuario");
+
     }
 
     @Override
@@ -30,6 +35,7 @@ public class MenuInicioActivity extends AppCompatActivity implements View.OnClic
         switch(v.getId()){
             case R.id.cardFitosanitario:
                 Intent act_fito = new Intent(getApplicationContext(),FormFitosanitarioActivity.class);
+                act_fito.putExtra("com.nexgen.mantis.usuario",usuario);
                 startActivity(act_fito);
                 break;
             case R.id.cardFumigacion:

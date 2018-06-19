@@ -3,11 +3,24 @@ package mantis.nexgen.com.proyectomantis;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class FormFitosanitarioActivity extends AppCompatActivity {
@@ -15,7 +28,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
     TextView txt_nombre,txt_fecha;
     String usuario;
     String Nombre,fecha_actual;
-    Spinner spn_producto;
+    Spinner spn_producto,spn_variedad,spn_u1,spn_u2,spn_u3,spn_u4,spn_u5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +38,13 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
         txt_nombre = findViewById(R.id.txtNombre);
         txt_fecha = findViewById(R.id.txtFecha);
 
-        spn_producto = findViewById(R.id.spn_producto);
+        spn_producto =  findViewById(R.id.spnProducto);
+        spn_variedad = findViewById(R.id.spnVariedad);
+        spn_u1 = findViewById(R.id.spnU1);
+        spn_u2 = findViewById(R.id.spnU2);
+        spn_u3 = findViewById(R.id.spnU3);
+        spn_u4 = findViewById(R.id.spnU4);
+        spn_u5 = findViewById(R.id.spnU5);
 
         Intent IntentUsuario = getIntent();
         Bundle getUsuario = IntentUsuario.getExtras();
@@ -40,6 +59,168 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
         Date fecha = new Date();
         fecha_actual = formato_fecha.format(fecha);
         txt_fecha.setText(fecha_actual);
+        Inicializar(usuario);
 
+        spn_producto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                GetVariedad(usuario,spn_producto.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spn_u1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                GetUbicacionHijo(usuario,spn_u1.getSelectedItem().toString(),"U1");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spn_u2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                GetUbicacionHijo(usuario,spn_u2.getSelectedItem().toString(),"U2");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spn_u3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                GetUbicacionHijo(usuario,spn_u3.getSelectedItem().toString(),"U3");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spn_u4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                GetUbicacionHijo(usuario,spn_u4.getSelectedItem().toString(),"U4");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+    public void Inicializar (final String usuario){
+        String URL = "http://stage.inteli-bpm.com/Portal/ws/soap/cliente_mantis.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String[] respuesta =  response.split("&");
+                String[] producto = respuesta[0].split(",");
+                String[] ubicacion_inicial = respuesta[3].split(",");
+                ArrayAdapter adpProducto = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,producto);
+                adpProducto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spn_producto.setAdapter(adpProducto);
+                ArrayAdapter adpUbicacionInicial = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,ubicacion_inicial);
+                adpProducto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spn_u1.setAdapter(adpUbicacionInicial);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),"Error: "+error,Toast.LENGTH_SHORT).show();
+            }
+        }
+        ){
+            protected HashMap<String,String> getParams(){
+                HashMap<String,String> params = new HashMap<>();
+                params.put("id_usuario",usuario);
+                params.put("contrasena","12345");
+                params.put("id_formulario","F1");
+                params.put("fecha_peticion","now");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+    public void GetVariedad (final String usuario,final String producto){
+        String URL = "http://stage.inteli-bpm.com/Portal/ws/soap/cliente_mantis_variedad.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String[] variedad = response.split(",");
+                ArrayAdapter adpVariedad = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,variedad);
+                adpVariedad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spn_variedad.setAdapter(adpVariedad);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),"Error: "+error,Toast.LENGTH_SHORT).show();
+            }
+        }
+        ){
+            protected HashMap<String,String> getParams(){
+                HashMap<String,String> params = new HashMap<>();
+                params.put("id_usuario",usuario);
+                params.put("contrasena","12345");
+                params.put("tipo_flor",producto);
+                params.put("fecha_peticion","now");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+    public void GetUbicacionHijo (final String usuario,final String valorPadre,final String padre){
+        String URL ="http://stage.inteli-bpm.com/Portal/ws/soap/cliente_mantis_ubicacionhijos.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String[] valoresHijo = response.split(",");
+                ArrayAdapter adpValoresHijo = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,valoresHijo);
+                adpValoresHijo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                switch(padre){
+                    case "U1":
+                        spn_u2.setAdapter(adpValoresHijo);
+                        break;
+                    case "U2":
+                        spn_u3.setAdapter(adpValoresHijo);
+                        break;
+                    case "U3":
+                        spn_u4.setAdapter(adpValoresHijo);
+                        break;
+                    case "U4":
+                        spn_u5.setAdapter(adpValoresHijo);
+                        break;
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),"Error: "+error,Toast.LENGTH_SHORT).show();
+            }
+        }
+        ){
+            protected HashMap<String,String> getParams(){
+                HashMap<String,String> params = new HashMap<>();
+                params.put("id_usuario",usuario);
+                params.put("contrasena","12345");
+                params.put("valor_padre",valorPadre);
+                params.put("fecha_peticion","now");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 }

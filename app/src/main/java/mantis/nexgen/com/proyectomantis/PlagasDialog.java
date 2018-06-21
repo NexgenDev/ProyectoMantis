@@ -6,9 +6,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,7 +21,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class PlagasDialog extends DialogFragment {
@@ -27,6 +32,10 @@ public class PlagasDialog extends DialogFragment {
     private Spinner spn_plaga,spn_intensidad,spn_estado;
     Button btn_agregar,btn_cancelar;
     String usuario;
+    //ArrayAdapter<String> adapter;
+    AdaptadorPlagas adaptador;
+    ArrayList<ModeloPlagas> arrayList;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +46,7 @@ public class PlagasDialog extends DialogFragment {
         btn_agregar = view.findViewById(R.id.btnAgregarPlaga);
         btn_cancelar = view.findViewById(R.id.btnCancelarPlaga);
 
+
         Bundle tomar_datos = getArguments();
         usuario = tomar_datos.getString("com.nexgen.mantis.usuario");
         GetPlagas(usuario);
@@ -46,7 +56,6 @@ public class PlagasDialog extends DialogFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 GetEstado(usuario,spn_plaga.getSelectedItem().toString());
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -57,6 +66,21 @@ public class PlagasDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 getDialog().dismiss();
+            }
+        });
+
+        arrayList = new ArrayList<>();
+        adaptador = new AdaptadorPlagas(getActivity().getApplicationContext(),arrayList);
+        ((FormFitosanitarioActivity)getActivity()).tabla_plagas.setAdapter(adaptador);
+        arrayList.add(new ModeloPlagas("Plaga","Estado","Intensidad"));
+        btn_agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            String plaga = spn_plaga.getSelectedItem().toString();
+            String intensidad = spn_intensidad.getSelectedItem().toString();
+            String estado = spn_estado.getSelectedItem().toString();
+            arrayList.add(new ModeloPlagas(plaga,estado,intensidad));
+            adaptador.notifyDataSetChanged();
             }
         });
         return view;
@@ -102,9 +126,9 @@ public class PlagasDialog extends DialogFragment {
             @Override
             public void onResponse(String response) {
                 String[] estados = response.split(",");
-                ArrayAdapter adpVariedad = new ArrayAdapter(getActivity().getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,estados);
-                adpVariedad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spn_estado.setAdapter(adpVariedad);
+                ArrayAdapter adpEstados = new ArrayAdapter(getActivity().getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,estados);
+                adpEstados.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spn_estado.setAdapter(adpEstados);
             }
         }, new Response.ErrorListener() {
             @Override

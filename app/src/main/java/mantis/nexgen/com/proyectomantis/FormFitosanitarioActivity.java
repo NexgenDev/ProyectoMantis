@@ -6,10 +6,14 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -34,6 +39,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
     String Nombre,fecha_actual;
     Spinner spn_producto,spn_variedad,spn_u1,spn_u2,spn_u3,spn_u4,spn_u5;
     Button btn_plagas;
+    ListView tabla_plagas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +57,9 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
         spn_u4 = findViewById(R.id.spnU4);
         spn_u5 = findViewById(R.id.spnU5);
 
+        tabla_plagas = findViewById(R.id.tablaPlagas);
+
         btn_plagas = findViewById(R.id.btnPlagas);
-
-
 
         Intent IntentUsuario = getIntent();
         Bundle getUsuario = IntentUsuario.getExtras();
@@ -135,6 +141,15 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
                 dialogPlagas.show(getFragmentManager(),"Menu Plagas");
             }
         });
+        tabla_plagas.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
 
     }
     public void Inicializar (final String usuario){
@@ -145,6 +160,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
                 String[] respuesta =  response.split("&");
                 String[] producto = respuesta[0].split(",");
                 String[] ubicacion_inicial = respuesta[3].split(",");
+                String[] enfermedades = respuesta[5].split(",");
                 ArrayAdapter adpProducto = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,producto);
                 adpProducto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spn_producto.setAdapter(adpProducto);
@@ -152,6 +168,12 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
                 adpProducto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spn_u1.setAdapter(adpUbicacionInicial);
 
+                ViewGroup checkboxContainer =findViewById(R.id.chksEnfermedad);
+                for (int i = 0; i < enfermedades.length; i++) {
+                    CheckBox checkBox = new CheckBox(getApplicationContext());
+                    checkBox.setText(enfermedades[i]);
+                    checkboxContainer.addView(checkBox);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -243,4 +265,5 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
 }

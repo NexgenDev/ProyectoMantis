@@ -26,4 +26,16 @@
     <string name="text_fecha_form">Fecha:</string>
     <string name="text_producto_form">Producto:</string>
     <string name="text_variedad_form">Variedad:</string>
+    <string name="titulo_ubicacion_form">Ubicación</string>
+    <string name="titulo_U1">Linea</string>
+    <string name="titulo_U2">Bloque</string>
+    <string name="titulo_U3">Nave</string>
+    <string name="titulo_U4">Cama</string>
+    <string name="titulo_U5">Cuadro</string>
+    <string name="btn_plagas">Plagas</string>
+    <string name="texto_plaga_form">Plaga</string>
+    <string name="texto_intensidad_form">Intensidad</string>
+    <string name="texto_estado_form">Estado</string>
+    <string name="btn_Agregar">Agregar</string>
+    <string name="btn_cancelar">Cancelar</string>
 </resources>

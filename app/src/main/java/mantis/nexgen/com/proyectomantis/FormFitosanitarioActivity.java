@@ -1,11 +1,15 @@
 package mantis.nexgen.com.proyectomantis;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +33,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
     String usuario;
     String Nombre,fecha_actual;
     Spinner spn_producto,spn_variedad,spn_u1,spn_u2,spn_u3,spn_u4,spn_u5;
+    Button btn_plagas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,10 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
         spn_u3 = findViewById(R.id.spnU3);
         spn_u4 = findViewById(R.id.spnU4);
         spn_u5 = findViewById(R.id.spnU5);
+
+        btn_plagas = findViewById(R.id.btnPlagas);
+
+
 
         Intent IntentUsuario = getIntent();
         Bundle getUsuario = IntentUsuario.getExtras();
@@ -116,6 +125,16 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
 
             }
         });
+        btn_plagas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlagasDialog dialogPlagas = new PlagasDialog();
+                Bundle datos_plaga = new Bundle();
+                datos_plaga.putString("com.nexgen.mantis.usuario",usuario);
+                dialogPlagas.setArguments(datos_plaga);
+                dialogPlagas.show(getFragmentManager(),"Menu Plagas");
+            }
+        });
 
     }
     public void Inicializar (final String usuario){
@@ -132,6 +151,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
                 ArrayAdapter adpUbicacionInicial = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,ubicacion_inicial);
                 adpProducto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spn_u1.setAdapter(adpUbicacionInicial);
+
             }
         }, new Response.ErrorListener() {
             @Override

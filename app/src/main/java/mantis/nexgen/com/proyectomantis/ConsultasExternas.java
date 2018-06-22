@@ -12,7 +12,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ConsultasExternas{
     Context context;
@@ -50,6 +52,36 @@ public class ConsultasExternas{
                 return params;
             }
         };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+    }
+    public void DatosFitosanitario (final String usuario, final String fecha, final String producto, final String variedad, final String U5, final List<String> plagas, final List<String> enfermedades){
+       String URL = "http://stage.inteli-bpm.com/Portal/ws/soap/cliente_fitosanitario.php";
+       StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+           @Override
+           public void onResponse(String response) {
+
+           }
+       }, new Response.ErrorListener() {
+           @Override
+           public void onErrorResponse(VolleyError error) {
+               Toast.makeText(context,"Error: "+error,Toast.LENGTH_SHORT).show();
+           }
+       }
+       ){
+           protected HashMap<String,String> getParams (){
+               HashMap<String,String> params = new HashMap<>();
+               params.put("id_usuario",usuario);
+               params.put("fecha_monitoreo",fecha);
+               params.put("id_formulario","F1");
+               params.put("tipo_flor",producto);
+               params.put("variedad_flor",variedad);
+               params.put("hijo",U5);
+               params.put("plagas",plagas.toString());
+               params.put("enfermedad",enfermedades.toString());
+               return params;
+           }
+       };
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
     }

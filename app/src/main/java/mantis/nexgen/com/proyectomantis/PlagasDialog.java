@@ -21,6 +21,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,9 +34,9 @@ public class PlagasDialog extends DialogFragment {
     private Spinner spn_plaga,spn_intensidad,spn_estado;
     Button btn_agregar,btn_cancelar;
     String usuario;
-    //ArrayAdapter<String> adapter;
     AdaptadorPlagas adaptador;
     ArrayList<ModeloPlagas> arrayList;
+
 
     @Nullable
     @Override
@@ -79,7 +81,9 @@ public class PlagasDialog extends DialogFragment {
             String plaga = spn_plaga.getSelectedItem().toString();
             String intensidad = spn_intensidad.getSelectedItem().toString();
             String estado = spn_estado.getSelectedItem().toString();
+            String datos_plagas = plaga+"&"+estado+"&"+intensidad;
             arrayList.add(new ModeloPlagas(plaga,estado,intensidad));
+            ((FormFitosanitarioActivity)getActivity()).info_plagas.add(datos_plagas);
             adaptador.notifyDataSetChanged();
             }
         });

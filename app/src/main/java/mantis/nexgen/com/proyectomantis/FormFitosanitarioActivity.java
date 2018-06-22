@@ -26,11 +26,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 public class FormFitosanitarioActivity extends AppCompatActivity {
@@ -42,6 +44,9 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
     Button btn_plagas,btn_enviar;
     ListView tabla_plagas;
     CheckBox checkBox;
+    List<String> lista_enfermedades = new ArrayList<>();
+    List<String> info_plagas = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
         btn_enviar = findViewById(R.id.btnEnviarFito);
 
         Intent IntentUsuario = getIntent();
-        Bundle getUsuario = IntentUsuario.getExtras();
+        final Bundle getUsuario = IntentUsuario.getExtras();
         if(getUsuario != null){
             usuario = getUsuario.getString("com.nexgen.mantis.usuario");
         }
@@ -142,6 +147,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
                 datos_plaga.putString("com.nexgen.mantis.usuario",usuario);
                 dialogPlagas.setArguments(datos_plaga);
                 dialogPlagas.show(getFragmentManager(),"Menu Plagas");
+                info_plagas.clear();
             }
         });
         tabla_plagas.setOnTouchListener(new View.OnTouchListener() {
@@ -154,6 +160,22 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
             }
         });
 
+        btn_enviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nombre = txt_nombre.getText().toString();
+                String fecha = txt_fecha.getText().toString();
+                String producto = spn_producto.getSelectedItem().toString();
+                String variedad = spn_variedad.getSelectedItem().toString();
+                String U1 = spn_u1.getSelectedItem().toString();
+                String U2 = spn_u2.getSelectedItem().toString();
+                String U3 = spn_u3.getSelectedItem().toString();
+                String U4 = spn_u4.getSelectedItem().toString();
+                String U5 = spn_u5.getSelectedItem().toString();
+
+
+            }
+        });
 
     }
     public void Inicializar (final String usuario){
@@ -171,9 +193,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
                 ArrayAdapter adpUbicacionInicial = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,ubicacion_inicial);
                 adpProducto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spn_u1.setAdapter(adpUbicacionInicial);
-
                 ViewGroup checkboxContainer =findViewById(R.id.chksEnfermedad);
-                final ArrayList<String> enfermedades_seleccionadas = new ArrayList<>();
                 for (int i = 0; i < enfermedades.length; i++) {
                     checkBox = new CheckBox(getApplicationContext());
                     checkBox.setText(enfermedades[i]);
@@ -182,11 +202,11 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if(isChecked){
-                                enfermedades_seleccionadas.add(buttonView.getText().toString());
+                                lista_enfermedades.add(buttonView.getText().toString());
+
                             }else{
-                                enfermedades_seleccionadas.remove(enfermedades_seleccionadas.indexOf(buttonView.getText().toString()));
+                                lista_enfermedades.remove(lista_enfermedades.indexOf(buttonView.getText().toString()));
                             }
-                            Toast.makeText(getApplicationContext(),"Seleccionado: "+enfermedades_seleccionadas,Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

@@ -172,8 +172,8 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
                 String U3 = spn_u3.getSelectedItem().toString();
                 String U4 = spn_u4.getSelectedItem().toString();
                 String U5 = spn_u5.getSelectedItem().toString();
-
-
+                ConsultasExternas consultasExternas = new ConsultasExternas(getApplicationContext());
+                consultasExternas.DatosFitosanitario(usuario,fecha,producto,variedad,U5,info_plagas,lista_enfermedades);
             }
         });
 

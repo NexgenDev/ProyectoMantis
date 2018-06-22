@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,8 +39,9 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
     String usuario;
     String Nombre,fecha_actual;
     Spinner spn_producto,spn_variedad,spn_u1,spn_u2,spn_u3,spn_u4,spn_u5;
-    Button btn_plagas;
+    Button btn_plagas,btn_enviar;
     ListView tabla_plagas;
+    CheckBox checkBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
         tabla_plagas = findViewById(R.id.tablaPlagas);
 
         btn_plagas = findViewById(R.id.btnPlagas);
+        btn_enviar = findViewById(R.id.btnEnviarFito);
 
         Intent IntentUsuario = getIntent();
         Bundle getUsuario = IntentUsuario.getExtras();
@@ -151,6 +154,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
             }
         });
 
+
     }
     public void Inicializar (final String usuario){
         String URL = "http://stage.inteli-bpm.com/Portal/ws/soap/cliente_mantis.php";
@@ -160,7 +164,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
                 String[] respuesta =  response.split("&");
                 String[] producto = respuesta[0].split(",");
                 String[] ubicacion_inicial = respuesta[3].split(",");
-                String[] enfermedades = respuesta[5].split(",");
+                final String[] enfermedades = respuesta[5].split(",");
                 ArrayAdapter adpProducto = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,producto);
                 adpProducto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spn_producto.setAdapter(adpProducto);
@@ -169,11 +173,24 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
                 spn_u1.setAdapter(adpUbicacionInicial);
 
                 ViewGroup checkboxContainer =findViewById(R.id.chksEnfermedad);
+                final ArrayList<String> enfermedades_seleccionadas = new ArrayList<>();
                 for (int i = 0; i < enfermedades.length; i++) {
-                    CheckBox checkBox = new CheckBox(getApplicationContext());
+                    checkBox = new CheckBox(getApplicationContext());
                     checkBox.setText(enfermedades[i]);
                     checkboxContainer.addView(checkBox);
+                    checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if(isChecked){
+                                enfermedades_seleccionadas.add(buttonView.getText().toString());
+                            }else{
+                                enfermedades_seleccionadas.remove(enfermedades_seleccionadas.indexOf(buttonView.getText().toString()));
+                            }
+                            Toast.makeText(getApplicationContext(),"Seleccionado: "+enfermedades_seleccionadas,Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override

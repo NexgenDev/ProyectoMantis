@@ -74,7 +74,6 @@ public class PlagasDialog extends DialogFragment {
         arrayList = new ArrayList<>();
         adaptador = new AdaptadorPlagas(getActivity().getApplicationContext(),arrayList);
         ((FormFitosanitarioActivity)getActivity()).tabla_plagas.setAdapter(adaptador);
-        arrayList.add(new ModeloPlagas("Plaga","Estado","Intensidad"));
         btn_agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +84,7 @@ public class PlagasDialog extends DialogFragment {
             arrayList.add(new ModeloPlagas(plaga,estado,intensidad));
             ((FormFitosanitarioActivity)getActivity()).info_plagas.add(datos_plagas);
             adaptador.notifyDataSetChanged();
+            Toast.makeText(getActivity().getApplicationContext(),"Plaga "+plaga+" Agregada",Toast.LENGTH_SHORT).show();
             }
         });
         return view;

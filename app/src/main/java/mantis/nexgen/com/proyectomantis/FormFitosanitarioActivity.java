@@ -1,8 +1,6 @@
 package mantis.nexgen.com.proyectomantis;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.DialogFragment;
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,8 +24,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,7 +74,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
         Nombre = obtener_nombre.ObtenerNombre(usuario);
         txt_nombre.setText(Nombre);
 
-        SimpleDateFormat formato_fecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat formato_fecha = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Date fecha = new Date();
         fecha_actual = formato_fecha.format(fecha);
         txt_fecha.setText(fecha_actual);
@@ -163,7 +159,7 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
         btn_enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nombre = txt_nombre.getText().toString();
+                //String nombre = txt_nombre.getText().toString();
                 String fecha = txt_fecha.getText().toString();
                 String producto = spn_producto.getSelectedItem().toString();
                 String variedad = spn_variedad.getSelectedItem().toString();
@@ -172,8 +168,13 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
                 String U3 = spn_u3.getSelectedItem().toString();
                 String U4 = spn_u4.getSelectedItem().toString();
                 String U5 = spn_u5.getSelectedItem().toString();
+
                 ConsultasExternas consultasExternas = new ConsultasExternas(getApplicationContext());
                 consultasExternas.DatosFitosanitario(usuario,fecha,producto,variedad,U5,info_plagas,lista_enfermedades);
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(getIntent());
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -302,5 +303,4 @@ public class FormFitosanitarioActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
-
 }

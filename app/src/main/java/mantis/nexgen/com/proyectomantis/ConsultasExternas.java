@@ -57,6 +57,9 @@ public class ConsultasExternas{
     }
     public void DatosFitosanitario (final String usuario, final String fecha, final String producto, final String variedad, final String U5, final List<String> plagas, final List<String> enfermedades){
        String URL = "http://stage.inteli-bpm.com/Portal/ws/soap/cliente_fitosanitario.php";
+       final String plagas_final= plagas.toString().replace("[","").replace("]","");
+       final String enfermedades_final= enfermedades.toString().replace("[","").replace("]","");
+
        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
            @Override
            public void onResponse(String response) {
@@ -77,8 +80,8 @@ public class ConsultasExternas{
                params.put("tipo_flor",producto);
                params.put("variedad_flor",variedad);
                params.put("hijo",U5);
-               params.put("plagas",plagas.toString());
-               params.put("enfermedad",enfermedades.toString());
+               params.put("plagas",plagas_final);
+               params.put("enfermedad",enfermedades_final);
                return params;
            }
        };

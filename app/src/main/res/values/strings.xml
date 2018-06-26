@@ -43,4 +43,7 @@
     <string name="btn_salir">Salir</string>
     <string name="btn_volver">Volver</string>
     <string name="titulo_plagas_dialog">Plagas</string>
+    <string name="texto_plaga">Plaga</string>
+    <string name="texto_estado">Estado</string>
+    <string name="texto_intensidad">Intensidad</string>
 </resources>

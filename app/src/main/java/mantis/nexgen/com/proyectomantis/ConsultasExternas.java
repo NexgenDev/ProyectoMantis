@@ -12,11 +12,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ConsultasExternas{
+public class ConsultasExternas {
     Context context;
     public ConsultasExternas(Context context) {
         this.context = context;
@@ -57,13 +56,19 @@ public class ConsultasExternas{
     }
     public void DatosFitosanitario (final String usuario, final String fecha, final String producto, final String variedad, final String U5, final List<String> plagas, final List<String> enfermedades){
        String URL = "http://stage.inteli-bpm.com/Portal/ws/soap/cliente_fitosanitario.php";
+
        final String plagas_final= plagas.toString().replace("[","").replace("]","");
        final String enfermedades_final= enfermedades.toString().replace("[","").replace("]","");
 
        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
            @Override
            public void onResponse(String response) {
-                Toast.makeText(context,response+"",Toast.LENGTH_SHORT).show();
+                String[] respuesta = response.split("º");
+                String estado = respuesta[0];
+                String mensaje = respuesta[1];
+                Toast.makeText(context, mensaje + "", Toast.LENGTH_SHORT).show();
+
+
            }
        }, new Response.ErrorListener() {
            @Override
